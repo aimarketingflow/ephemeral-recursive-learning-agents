@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursive Virtual Agent Architecture</title>
+    <style>
+        :root {
+            --bg-dark: #0d1117;
+            --bg-card: #161b22;
+            --bg-code: #1c2128;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-purple: #a371f7;
+            --accent-orange: #d29922;
+            --accent-red: #f85149;
+            --accent-cyan: #39c5cf;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-dark); color: var(--text); line-height: 1.7; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: var(--text-muted); font-size: 1.1rem; }
+        h2 { color: var(--accent-blue); margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        h3 { color: var(--accent-purple); margin: 1.5rem 0 0.75rem; }
+        p { margin-bottom: 1rem; }
+        .ascii-diagram { background: var(--bg-code); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; font-family: 'SF Mono', Monaco, monospace; font-size: 0.75rem; line-height: 1.4; white-space: pre; color: var(--accent-green); }
+        .ascii-diagram .comment { color: var(--text-muted); }
+        .ascii-diagram .highlight { color: var(--accent-blue); }
+        .ascii-diagram .accent { color: var(--accent-purple); }
+        .ascii-diagram .warning { color: var(--accent-orange); }
+        .ascii-diagram .error { color: var(--accent-red); }
+        .ascii-diagram .cyan { color: var(--accent-cyan); }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .card.highlight-blue { border-left: 4px solid var(--accent-blue); }
+        .card.highlight-green { border-left: 4px solid var(--accent-green); }
+        .card.highlight-purple { border-left: 4px solid var(--accent-purple); }
+        .card.highlight-cyan { border-left: 4px solid var(--accent-cyan); }
+        .key-point { background: linear-gradient(135deg, rgba(63, 185, 80, 0.1), rgba(57, 197, 207, 0.1)); border: 1px solid var(--accent-green); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .key-point h4 { color: var(--accent-green); margin-top: 0; }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: var(--bg-card); border-radius: 8px; overflow: hidden; }
+        th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: var(--bg-code); color: var(--accent-blue); }
+        code { background: var(--bg-code); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9rem; color: var(--accent-orange); }
+        footer { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); }
+        ul { margin: 1rem 0 1rem 1.5rem; }
+        li { margin: 0.5rem 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Recursive Virtual Agent Architecture</h1>
+            <p class="subtitle">Ephemeral Agents that Improve the Base Layer Through Continuous Learning</p>
+        </header>
+
+        <section>
+            <h2>The Core Concept</h2>
+            
+            <div class="key-point">
+                <h4>Your Insight</h4>
+                <p><strong>Spawn ephemeral "Virtual Agents"</strong> for each incident/dataset that:</p>
+                <ul>
+                    <li>Evaluate new data against existing knowledge (fast response)</li>
+                    <li>Learn from the interaction</li>
+                    <li>Distill learnings back to the base layer</li>
+                    <li>Self-destruct (ephemeral - no data retention)</li>
+                </ul>
+                <p>Result: <strong>Base model continuously improves</strong> while agents remain disposable.</p>
+            </div>
+
+            <div class="ascii-diagram">
+<span class="comment">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="comment">│                    RECURSIVE VIRTUAL AGENT ARCHITECTURE                             │</span>
+<span class="comment">└─────────────────────────────────────────────────────────────────────────────────────┘</span>
+
+                              <span class="highlight">BASE LAYER (Persistent)</span>
+  ┌─────────────────────────────────────────────────────────────────────────────────┐
+  │                                                                                 │
+  │   +------------------+     +------------------+     +------------------+        │
+  │   |  Base Model      |     |  LoRA Adapter    |     |  Knowledge       |        │
+  │   |  (TinyLlama)     |  +  |  (ShubiCore)     |  +  |  Index           |        │
+  │   |  [FROZEN]        |     |  [EVOLVING]      |     |  [GROWING]       |        │
+  │   +------------------+     +------------------+     +------------------+        │
+  │                                    ^                        ^                   │
+  │                                    |                        |                   │
+  │                            <span class="cyan">DISTILLED LEARNINGS FLOW UP</span>                        │
+  │                                    |                        |                   │
+  └────────────────────────────────────┼────────────────────────┼───────────────────┘
+                                       |                        |
+       ┌───────────────────────────────┼────────────────────────┼───────────────────┐
+       │                               |                        |                   │
+       │                    <span class="accent">VIRTUAL AGENT LAYER (Ephemeral)</span>                       │
+       │                               |                        |                   │
+       │   +-------------+    +-------------+    +-------------+    +-------------+ │
+       │   | <span class="warning">Agent #1</span>    |    | <span class="warning">Agent #2</span>    |    | <span class="warning">Agent #3</span>    |    | <span class="warning">Agent #N</span>    | │
+       │   | Incident A  |    | Incident B  |    | Incident C  |    | Incident N  | │
+       │   |             |    |             |    |             |    |             | │
+       │   | SPAWN ──────┼────┼─────────────┼────┼─────────────┼────┼──> DESTROY  | │
+       │   | ANALYZE     |    | ANALYZE     |    | ANALYZE     |    | ANALYZE     | │
+       │   | LEARN       |    | LEARN       |    | LEARN       |    | LEARN       | │
+       │   | DISTILL ────┼────┼─────────────┼────┼─────────────┼────┼──> BASE     | │
+       │   | DESTROY     |    | DESTROY     |    | DESTROY     |    | DESTROY     | │
+       │   +-------------+    +-------------+    +-------------+    +-------------+ │
+       │         │                  │                  │                  │         │
+       │         └──────────────────┴──────────────────┴──────────────────┘         │
+       │                                    │                                       │
+       │                          <span class="error">SENSITIVE DATA NEVER PERSISTS</span>                    │
+       │                          <span class="error">ONLY LEARNINGS SURVIVE</span>                           │
+       │                                                                            │
+       └────────────────────────────────────────────────────────────────────────────┘
+            </div>
+        </section>
+
+        <section>
+            <h2>The Two-Speed System</h2>
+            
+            <p>Your intuition about "speeding up responsiveness" maps to a <strong>two-tier architecture</strong>:</p>
+            
+            <div class="ascii-diagram">
+<span class="comment">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="comment">│                    FAST PATH vs SLOW PATH                                           │</span>
+<span class="comment">└─────────────────────────────────────────────────────────────────────────────────────┘</span>
+
+<span class="highlight">FAST PATH: Instant Response (Milliseconds)</span>
+
+  New Data ──► Compare against Knowledge Index ──► Instant Match?
+                                                        │
+                                    ┌───────────────────┴───────────────────┐
+                                    │                                       │
+                                   YES                                      NO
+                                    │                                       │
+                                    v                                       v
+                            Return cached                          Spawn Virtual Agent
+                            response pattern                       (Slow Path)
+                            
+  <span class="cyan">HOW IT WORKS:</span>
+  
+  Knowledge Index = Vector embeddings of all past learnings
+  New data → Embed → Cosine similarity search → Top matches
+  
+  If similarity > 0.9: Use cached response (FAST)
+  If similarity < 0.9: Need deeper analysis (SLOW)
+
+<span class="accent">SLOW PATH: Deep Analysis (Seconds to Minutes)</span>
+
+  New Data ──► Spawn Virtual Agent ──► Full LLM Analysis ──► Response
+                      │                       │
+                      │                       v
+                      │               Extract learnings
+                      │                       │
+                      │                       v
+                      │               Update Knowledge Index
+                      │               (for future fast path)
+                      │                       │
+                      │                       v
+                      └────────────────► Destroy Agent
+                                        (data gone, learning stays)
+            </div>
+
+            <div class="grid-2">
+                <div class="card highlight-green">
+                    <h4>Fast Path Benefits</h4>
+                    <ul>
+                        <li>Instant response for known patterns</li>
+                        <li>No LLM inference needed</li>
+                        <li>Scales to millions of queries</li>
+                        <li>Low compute cost</li>
+                    </ul>
+                </div>
+                <div class="card highlight-purple">
+                    <h4>Slow Path Benefits</h4>
+                    <ul>
+                        <li>Handles novel situations</li>
+                        <li>Deep reasoning when needed</li>
+                        <li>Generates new learnings</li>
+                        <li>Improves fast path over time</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Virtual Agent Lifecycle</h2>
+            
+            <div class="ascii-diagram">
+<span class="comment">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="comment">│                    VIRTUAL AGENT LIFECYCLE                                          │</span>
+<span class="comment">└─────────────────────────────────────────────────────────────────────────────────────┘</span>
+
+<span class="highlight">1. SPAWN</span>
+   │
+   │   incident_data = load_siem_alert()
+   │   
+   │   agent = VirtualAgent(
+   │       base_model = shared_base_model,      <span class="comment"># Reference, not copy</span>
+   │       lora_adapter = current_adapter,       <span class="comment"># Reference, not copy</span>
+   │       context = incident_data,              <span class="comment"># Ephemeral</span>
+   │       memory = [],                          <span class="comment"># Ephemeral</span>
+   │   )
+   │
+   v
+<span class="accent">2. ANALYZE</span>
+   │
+   │   <span class="comment"># Agent has full context of this incident</span>
+   │   analysis = agent.analyze(incident_data)
+   │   
+   │   <span class="comment"># Agent can ask clarifying questions</span>
+   │   while agent.needs_more_info():
+   │       more_data = agent.request_data()
+   │       agent.incorporate(more_data)
+   │   
+   │   <span class="comment"># Agent produces verdict</span>
+   │   verdict = agent.generate_verdict()
+   │
+   v
+<span class="warning">3. LEARN (Extract Generalizable Knowledge)</span>
+   │
+   │   <span class="comment"># What did we learn that applies beyond this incident?</span>
+   │   learnings = agent.extract_learnings()
+   │   
+   │   <span class="comment"># Examples of learnings:</span>
+   │   <span class="comment"># - New IOC pattern: "Process X connecting to port Y = suspicious"</span>
+   │   <span class="comment"># - New attack signature: "Sequence A→B→C indicates lateral movement"</span>
+   │   <span class="comment"># - Response effectiveness: "Strategy X worked for attack type Y"</span>
+   │   
+   │   <span class="comment"># Learnings are ABSTRACT - no sensitive data</span>
+   │   learnings = {
+   │       "pattern": "process_name:ruby + dest_port:53 + rapid_queries",
+   │       "classification": "potential_dns_exfil",
+   │       "confidence": 0.85,
+   │       "recommended_response": "investigate_dns_logs"
+   │   }
+   │
+   v
+<span class="cyan">4. DISTILL (Update Base Layer)</span>
+   │
+   │   <span class="comment"># Add to knowledge index (fast path)</span>
+   │   knowledge_index.add(learnings.embedding)
+   │   
+   │   <span class="comment"># Add to training buffer (slow improvement)</span>
+   │   training_buffer.append({
+   │       "input": abstract_scenario,
+   │       "output": abstract_response,
+   │       "outcome": success_metric
+   │   })
+   │   
+   │   <span class="comment"># Periodically retrain LoRA adapter</span>
+   │   if training_buffer.size > threshold:
+   │       retrain_lora_adapter(training_buffer)
+   │       training_buffer.clear()
+   │
+   v
+<span class="error">5. DESTROY</span>
+   │
+   │   <span class="comment"># Secure deletion of all ephemeral data</span>
+   │   agent.context = None
+   │   agent.memory = None
+   │   agent.conversation_history = None
+   │   
+   │   <span class="comment"># Cryptographic erasure</span>
+   │   secure_wipe(agent.session_key)
+   │   
+   │   del agent
+   │   
+   │   <span class="comment"># NOTHING REMAINS except abstract learnings in base layer</span>
+   │
+   v
+<span class="highlight">DONE - Base layer is now slightly smarter</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Recursive Improvement Loop</h2>
+            
+            <div class="ascii-diagram">
+<span class="comment">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="comment">│                    RECURSIVE IMPROVEMENT: HOW THE BASE LAYER EVOLVES                │</span>
+<span class="comment">└─────────────────────────────────────────────────────────────────────────────────────┘</span>
+
+                                    TIME ────────────────────────────────────────►
+
+  <span class="highlight">BASE LAYER</span>
+  ┌─────────┐     ┌─────────┐     ┌─────────┐     ┌─────────┐     ┌─────────┐
+  │ v1.0    │────►│ v1.1    │────►│ v1.2    │────►│ v1.3    │────►│ v1.N    │
+  │ 54 ex   │     │ 154 ex  │     │ 254 ex  │     │ 354 ex  │     │ ∞ ex    │
+  └─────────┘     └─────────┘     └─────────┘     └─────────┘     └─────────┘
+       ^               ^               ^               ^               ^
+       │               │               │               │               │
+       │          +100 learnings  +100 learnings  +100 learnings      │
+       │               │               │               │               │
+  ┌────┴────┐     ┌────┴────┐     ┌────┴────┐     ┌────┴────┐         │
+  │ Initial │     │ Agents  │     │ Agents  │     │ Agents  │         │
+  │ Training│     │ 1-100   │     │ 101-200 │     │ 201-300 │    ... forever
+  │ (manual)│     │ (auto)  │     │ (auto)  │     │ (auto)  │
+  └─────────┘     └─────────┘     └─────────┘     └─────────┘
+
+<span class="accent">WHAT IMPROVES:</span>
+
+  1. <span class="highlight">Knowledge Index</span> (Fast Path)
+     - More patterns recognized instantly
+     - Fewer queries need slow path
+     - Response time decreases
+     
+  2. <span class="cyan">LoRA Adapter</span> (Slow Path Quality)
+     - Better analysis when slow path is needed
+     - More accurate verdicts
+     - Better learning extraction
+     
+  3. <span class="warning">Response Strategies</span> (Chaos Defense Integration)
+     - Learn which strategies work for which attacks
+     - Optimize strategy selection
+     - Reduce wasted resources
+
+<span class="error">CRITICAL: The improvement is AUTOMATIC</span>
+<span class="error">         Every incident makes the system smarter</span>
+<span class="error">         No manual retraining needed</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>Memory Architecture: What Persists vs What Dies</h2>
+            
+            <div class="ascii-diagram">
+<span class="comment">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="comment">│                    MEMORY SEPARATION: EPHEMERAL vs PERSISTENT                       │</span>
+<span class="comment">└─────────────────────────────────────────────────────────────────────────────────────┘</span>
+
+<span class="error">EPHEMERAL (Dies with Agent)</span>              <span class="highlight">PERSISTENT (Lives in Base Layer)</span>
+
+  ┌─────────────────────────┐              ┌─────────────────────────┐
+  │ Incident-Specific Data  │              │ Abstract Patterns       │
+  │                         │              │                         │
+  │ - Raw log files         │              │ - "Port scan followed   │
+  │ - IP addresses          │              │    by SSH attempt =     │
+  │ - User names            │              │    recon + exploit"     │
+  │ - File contents         │              │                         │
+  │ - Network captures      │              │ - "Ruby + DNS + rapid   │
+  │ - Conversation history  │              │    = possible exfil"    │
+  │                         │              │                         │
+  └─────────────────────────┘              └─────────────────────────┘
+           │                                         │
+           │ <span class="error">DESTROYED</span>                               │ <span class="highlight">RETAINED</span>
+           │                                         │
+           v                                         v
+  ┌─────────────────────────┐              ┌─────────────────────────┐
+  │ Why it must die:        │              │ Why it can live:        │
+  │                         │              │                         │
+  │ - Contains PII          │              │ - No PII                │
+  │ - Contains secrets      │              │ - No secrets            │
+  │ - Legal liability       │              │ - Generalizable         │
+  │ - Storage costs         │              │ - Improves system       │
+  │ - Attack surface        │              │ - Small footprint       │
+  └─────────────────────────┘              └─────────────────────────┘
+
+<span class="cyan">THE ABSTRACTION PROCESS:</span>
+
+  Raw: "User john.doe@company.com from 192.168.1.50 ran mimikatz.exe"
+                                    │
+                                    v
+  Abstract: "internal_user + internal_ip + credential_dump_tool"
+                                    │
+                                    v
+  Pattern: "credential_theft_attempt from insider"
+                                    │
+                                    v
+  Learning: {
+      "trigger": ["credential_dump_tool", "internal_source"],
+      "classification": "insider_threat_or_compromised_account",
+      "severity": "critical",
+      "response": ["isolate_host", "revoke_credentials", "forensic_capture"]
+  }
+
+<span class="warning">The learning contains NO sensitive data but captures the KNOWLEDGE</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>Implementation: The Virtual Agent Class</h2>
+            
+            <div class="ascii-diagram">
+<span class="comment"># Conceptual Implementation</span>
+
+class VirtualAgent:
+    """Ephemeral agent that analyzes one incident and improves base layer."""
+    
+    def __init__(self, base_layer, incident_context):
+        <span class="comment"># References to shared resources (not copies)</span>
+        self.model = base_layer.model          <span class="comment"># Shared</span>
+        self.adapter = base_layer.adapter      <span class="comment"># Shared</span>
+        self.knowledge = base_layer.knowledge  <span class="comment"># Shared (read-only)</span>
+        
+        <span class="comment"># Ephemeral state (dies with agent)</span>
+        self.context = incident_context        <span class="comment"># Sensitive data</span>
+        self.memory = []                       <span class="comment"># Conversation history</span>
+        self.session_key = generate_key()      <span class="comment"># For secure deletion</span>
+        
+        <span class="comment"># Learning buffer (will be abstracted before persistence)</span>
+        self.learnings = []
+    
+    def analyze(self):
+        <span class="comment"># Fast path: Check if we've seen this pattern</span>
+        similar = self.knowledge.find_similar(self.context)
+        
+        if similar.confidence > 0.9:
+            <span class="highlight"># FAST: Return cached response</span>
+            return similar.response
+        
+        <span class="comment"># Slow path: Full LLM analysis</span>
+        <span class="accent"># SLOW: Deep analysis needed</span>
+        prompt = self.build_prompt(self.context)
+        response = self.model.generate(prompt, adapter=self.adapter)
+        
+        <span class="comment"># Extract learnings for base layer</span>
+        self.extract_learnings(response)
+        
+        return response
+    
+    def extract_learnings(self, analysis):
+        """Convert specific findings to abstract patterns."""
+        
+        <span class="comment"># Use LLM to abstract the learnings</span>
+        abstraction_prompt = f"""
+        Given this incident analysis, extract generalizable patterns.
+        Remove all specific identifiers (IPs, names, etc).
+        Keep only the abstract attack pattern and response.
+        
+        Analysis: {analysis}
+        """
+        
+        abstract = self.model.generate(abstraction_prompt)
+        self.learnings.append(abstract)
+    
+    def distill_to_base(self, base_layer):
+        """Push learnings to base layer before destruction."""
+        
+        for learning in self.learnings:
+            <span class="comment"># Add to knowledge index (fast path improvement)</span>
+            base_layer.knowledge.add(learning)
+            
+            <span class="comment"># Add to training buffer (slow path improvement)</span>
+            base_layer.training_buffer.append(learning)
+    
+    def destroy(self):
+        """Secure deletion of all ephemeral data."""
+        
+        <span class="comment"># Cryptographic erasure</span>
+        secure_wipe(self.context)
+        secure_wipe(self.memory)
+        secure_wipe(self.session_key)
+        
+        <span class="comment"># Null references</span>
+        self.context = None
+        self.memory = None
+        self.learnings = None  <span class="comment"># Already distilled</span>
+        
+        <span class="warning"># Agent is now safe to garbage collect</span>
+
+
+class BaseLayer:
+    """Persistent layer that improves over time."""
+    
+    def __init__(self):
+        self.model = load_base_model("TinyLlama")
+        self.adapter = load_lora_adapter("shubicore-v1")
+        self.knowledge = VectorIndex()
+        self.training_buffer = []
+    
+    def spawn_agent(self, incident):
+        """Create ephemeral agent for one incident."""
+        return VirtualAgent(self, incident)
+    
+    def process_incident(self, incident):
+        <span class="comment"># Spawn</span>
+        agent = self.spawn_agent(incident)
+        
+        <span class="comment"># Analyze</span>
+        result = agent.analyze()
+        
+        <span class="comment"># Distill learnings</span>
+        agent.distill_to_base(self)
+        
+        <span class="comment"># Destroy</span>
+        agent.destroy()
+        
+        <span class="comment"># Periodic retraining</span>
+        if len(self.training_buffer) >= 100:
+            self.retrain_adapter()
+        
+        return result
+    
+    def retrain_adapter(self):
+        """Periodically improve LoRA adapter with new learnings."""
+        
+        <span class="comment"># Convert learnings to training format</span>
+        training_data = format_for_lora(self.training_buffer)
+        
+        <span class="comment"># Incremental LoRA training</span>
+        self.adapter = train_lora_incremental(
+            base_model=self.model,
+            current_adapter=self.adapter,
+            new_data=training_data
+        )
+        
+        <span class="comment"># Clear buffer</span>
+        self.training_buffer = []
+        
+        <span class="comment"># Version bump</span>
+        self.adapter.version += 0.1
+            </div>
+        </section>
+
+        <section>
+            <h2>Speed Optimization: The Knowledge Index</h2>
+            
+            <div class="ascii-diagram">
+<span class="comment">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="comment">│                    KNOWLEDGE INDEX: THE FAST PATH ENGINE                            │</span>
+<span class="comment">└─────────────────────────────────────────────────────────────────────────────────────┘</span>
+
+<span class="highlight">HOW IT SPEEDS UP RESPONSES:</span>
+
+  Traditional LLM Query:
+  
+    Input ──► Tokenize ──► Forward Pass ──► Generate ──► Output
+                              │
+                         <span class="error">~500ms - 5s</span>
+                         (depends on model size)
+
+  Knowledge Index Query:
+  
+    Input ──► Embed ──► Vector Search ──► Return Match
+                              │
+                         <span class="highlight">~5ms - 50ms</span>
+                         (constant time)
+
+<span class="accent">THE KNOWLEDGE INDEX STRUCTURE:</span>
+
+  ┌─────────────────────────────────────────────────────────────────────────────────┐
+  │                         VECTOR DATABASE                                         │
+  │                                                                                 │
+  │   Pattern Embedding          Response Template          Metadata               │
+  │   ─────────────────          ─────────────────          ────────               │
+  │   [0.23, 0.87, ...]    →    "This is DNS exfil..."     {conf: 0.9}            │
+  │   [0.45, 0.12, ...]    →    "Port scan detected..."    {conf: 0.85}           │
+  │   [0.78, 0.34, ...]    →    "Credential theft..."      {conf: 0.95}           │
+  │   [0.11, 0.99, ...]    →    "Lateral movement..."      {conf: 0.88}           │
+  │   ...                                                                          │
+  │   (grows with each agent's learnings)                                          │
+  │                                                                                 │
+  └─────────────────────────────────────────────────────────────────────────────────┘
+
+<span class="warning">QUERY PROCESS:</span>
+
+  1. New incident arrives
+  2. Embed incident description: embed("ruby process making DNS queries")
+  3. Search index: find_nearest(embedding, k=5)
+  4. Check confidence: if top_match.similarity > 0.9
+  5. Return cached response (FAST PATH)
+  6. Else: spawn agent (SLOW PATH)
+
+<span class="cyan">OVER TIME:</span>
+
+  Day 1:    Index has 54 patterns (initial training)
+            Fast path hit rate: ~20%
+            
+  Day 30:   Index has 500 patterns (from agents)
+            Fast path hit rate: ~60%
+            
+  Day 365:  Index has 5000 patterns
+            Fast path hit rate: ~90%
+            
+  <span class="highlight">System gets faster as it learns more!</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Complete Architecture</h2>
+            
+            <div class="ascii-diagram">
+<span class="comment">┌─────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="comment">│                    COMPLETE RECURSIVE VIRTUAL AGENT SYSTEM                          │</span>
+<span class="comment">└─────────────────────────────────────────────────────────────────────────────────────┘</span>
+
+                                 INCIDENT INPUT
+                                       │
+                                       v
+                    ┌──────────────────────────────────────┐
+                    │         KNOWLEDGE INDEX              │
+                    │         (Vector Search)              │
+                    │                                      │
+                    │   "Have we seen this before?"        │
+                    └──────────────────┬───────────────────┘
+                                       │
+                         ┌─────────────┴─────────────┐
+                         │                           │
+                    YES (>90%)                   NO (<90%)
+                         │                           │
+                         v                           v
+              ┌─────────────────────┐    ┌─────────────────────┐
+              │    FAST PATH        │    │    SLOW PATH        │
+              │                     │    │                     │
+              │  Return cached      │    │  Spawn Virtual      │
+              │  response           │    │  Agent              │
+              │                     │    │                     │
+              │  ~10ms              │    │  ~1-10s             │
+              └─────────────────────┘    └──────────┬──────────┘
+                         │                          │
+                         │                          v
+                         │               ┌─────────────────────┐
+                         │               │  VIRTUAL AGENT      │
+                         │               │                     │
+                         │               │  1. Load context    │
+                         │               │  2. Full LLM        │
+                         │               │     analysis        │
+                         │               │  3. Generate        │
+                         │               │     response        │
+                         │               │  4. Extract         │
+                         │               │     learnings       │
+                         │               └──────────┬──────────┘
+                         │                          │
+                         │                          v
+                         │               ┌─────────────────────┐
+                         │               │  DISTILL LEARNINGS  │
+                         │               │                     │
+                         │               │  Abstract patterns  │
+                         │               │  (no sensitive data)│
+                         │               └──────────┬──────────┘
+                         │                          │
+                         │          ┌───────────────┴───────────────┐
+                         │          │                               │
+                         │          v                               v
+                         │  ┌─────────────────┐          ┌─────────────────┐
+                         │  │ UPDATE INDEX    │          │ TRAINING BUFFER │
+                         │  │ (fast path      │          │ (slow path      │
+                         │  │  improvement)   │          │  improvement)   │
+                         │  └─────────────────┘          └────────┬────────┘
+                         │                                        │
+                         │                                        v
+                         │                            ┌─────────────────────┐
+                         │                            │ PERIODIC RETRAIN    │
+                         │                            │                     │
+                         │                            │ Every 100 learnings:│
+                         │                            │ Update LoRA adapter │
+                         │                            └─────────────────────┘
+                         │                                        │
+                         v                                        v
+              ┌─────────────────────────────────────────────────────────────┐
+              │                       RESPONSE OUTPUT                       │
+              │                                                             │
+              │   + System is now smarter for next incident                 │
+              └─────────────────────────────────────────────────────────────┘
+            </div>
+        </section>
+
+        <section>
+            <h2>Why This Architecture is Powerful</h2>
+            
+            <div class="grid-2">
+                <div class="card highlight-green">
+                    <h4>Speed</h4>
+                    <ul>
+                        <li>Fast path handles known patterns instantly</li>
+                        <li>Slow path only for truly novel situations</li>
+                        <li>System gets faster as it learns</li>
+                    </ul>
+                </div>
+                <div class="card highlight-purple">
+                    <h4>Privacy</h4>
+                    <ul>
+                        <li>Sensitive data never persists</li>
+                        <li>Only abstract learnings survive</li>
+                        <li>Ephemeral agents = no liability</li>
+                    </ul>
+                </div>
+                <div class="card highlight-cyan">
+                    <h4>Continuous Improvement</h4>
+                    <ul>
+                        <li>Every incident makes system smarter</li>
+                        <li>No manual retraining needed</li>
+                        <li>Automatic adaptation to new threats</li>
+                    </ul>
+                </div>
+                <div class="card highlight-blue">
+                    <h4>Scalability</h4>
+                    <ul>
+                        <li>Agents are lightweight (references, not copies)</li>
+                        <li>Can spawn thousands in parallel</li>
+                        <li>Base layer is shared efficiently</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <h4>The Recursive Magic</h4>
+                <p>Each agent improves the base layer → Better base layer spawns better agents → Better agents extract better learnings → Better learnings improve base layer → <strong>REPEAT FOREVER</strong></p>
+                <p>This is <strong>recursive self-improvement</strong> with built-in privacy guarantees.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>Recursive Virtual Agent Architecture</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Ephemeral Agents + Continuous Learning + Privacy by Design</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">January 27, 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
