@@ -1,0 +1,327 @@
+{
+  "test": "fast_path_efficiency",
+  "timestamp": "2026-01-27T19:04:46.693409",
+  "num_queries": 50,
+  "checkpoints": [
+    {
+      "query_count": 10,
+      "fast_path_hits": 3,
+      "hit_rate_pct": 30.0,
+      "knowledge_size": 7
+    },
+    {
+      "query_count": 50,
+      "fast_path_hits": 39,
+      "hit_rate_pct": 78.0,
+      "knowledge_size": 11
+    }
+  ],
+  "queries": [
+    {
+      "idx": 1,
+      "path": "slow",
+      "time_ms": 0.9431838989257812,
+      "template": 0
+    },
+    {
+      "idx": 2,
+      "path": "slow",
+      "time_ms": 0.11181831359863281,
+      "template": 9
+    },
+    {
+      "idx": 3,
+      "path": "fast",
+      "time_ms": 0.031948089599609375,
+      "template": 9
+    },
+    {
+      "idx": 4,
+      "path": "slow",
+      "time_ms": 0.0896453857421875,
+      "template": 4
+    },
+    {
+      "idx": 5,
+      "path": "slow",
+      "time_ms": 0.08296966552734375,
+      "template": 5
+    },
+    {
+      "idx": 6,
+      "path": "fast",
+      "time_ms": 0.05412101745605469,
+      "template": 0
+    },
+    {
+      "idx": 7,
+      "path": "slow",
+      "time_ms": 0.08916854858398438,
+      "template": 6
+    },
+    {
+      "idx": 8,
+      "path": "fast",
+      "time_ms": 0.05316734313964844,
+      "template": 4
+    },
+    {
+      "idx": 9,
+      "path": "slow",
+      "time_ms": 0.09799003601074219,
+      "template": 8
+    },
+    {
+      "idx": 10,
+      "path": "slow",
+      "time_ms": 0.11301040649414062,
+      "template": 7
+    },
+    {
+      "idx": 11,
+      "path": "fast",
+      "time_ms": 0.06985664367675781,
+      "template": 5
+    },
+    {
+      "idx": 12,
+      "path": "fast",
+      "time_ms": 0.07200241088867188,
+      "template": 0
+    },
+    {
+      "idx": 13,
+      "path": "slow",
+      "time_ms": 0.11801719665527344,
+      "template": 3
+    },
+    {
+      "idx": 14,
+      "path": "slow",
+      "time_ms": 0.1430511474609375,
+      "template": 1
+    },
+    {
+      "idx": 15,
+      "path": "fast",
+      "time_ms": 0.10180473327636719,
+      "template": 0
+    },
+    {
+      "idx": 16,
+      "path": "fast",
+      "time_ms": 0.08797645568847656,
+      "template": 7
+    },
+    {
+      "idx": 17,
+      "path": "fast",
+      "time_ms": 0.080108642578125,
+      "template": 5
+    },
+    {
+      "idx": 18,
+      "path": "slow",
+      "time_ms": 0.13709068298339844,
+      "template": 2
+    },
+    {
+      "idx": 19,
+      "path": "fast",
+      "time_ms": 0.10013580322265625,
+      "template": 4
+    },
+    {
+      "idx": 20,
+      "path": "fast",
+      "time_ms": 0.09489059448242188,
+      "template": 4
+    },
+    {
+      "idx": 21,
+      "path": "fast",
+      "time_ms": 0.09202957153320312,
+      "template": 8
+    },
+    {
+      "idx": 22,
+      "path": "fast",
+      "time_ms": 0.08916854858398438,
+      "template": 2
+    },
+    {
+      "idx": 23,
+      "path": "fast",
+      "time_ms": 0.08893013000488281,
+      "template": 6
+    },
+    {
+      "idx": 24,
+      "path": "fast",
+      "time_ms": 0.08702278137207031,
+      "template": 6
+    },
+    {
+      "idx": 25,
+      "path": "fast",
+      "time_ms": 0.08988380432128906,
+      "template": 9
+    },
+    {
+      "idx": 26,
+      "path": "fast",
+      "time_ms": 0.08702278137207031,
+      "template": 2
+    },
+    {
+      "idx": 27,
+      "path": "fast",
+      "time_ms": 0.08702278137207031,
+      "template": 5
+    },
+    {
+      "idx": 28,
+      "path": "fast",
+      "time_ms": 0.08821487426757812,
+      "template": 6
+    },
+    {
+      "idx": 29,
+      "path": "slow",
+      "time_ms": 0.1399517059326172,
+      "template": 7
+    },
+    {
+      "idx": 30,
+      "path": "fast",
+      "time_ms": 0.1049041748046875,
+      "template": 4
+    },
+    {
+      "idx": 31,
+      "path": "fast",
+      "time_ms": 0.10323524475097656,
+      "template": 9
+    },
+    {
+      "idx": 32,
+      "path": "fast",
+      "time_ms": 0.09608268737792969,
+      "template": 8
+    },
+    {
+      "idx": 33,
+      "path": "fast",
+      "time_ms": 0.09989738464355469,
+      "template": 7
+    },
+    {
+      "idx": 34,
+      "path": "fast",
+      "time_ms": 0.09298324584960938,
+      "template": 5
+    },
+    {
+      "idx": 35,
+      "path": "fast",
+      "time_ms": 0.10323524475097656,
+      "template": 7
+    },
+    {
+      "idx": 36,
+      "path": "fast",
+      "time_ms": 0.10323524475097656,
+      "template": 4
+    },
+    {
+      "idx": 37,
+      "path": "fast",
+      "time_ms": 0.102996826171875,
+      "template": 4
+    },
+    {
+      "idx": 38,
+      "path": "fast",
+      "time_ms": 0.10585784912109375,
+      "template": 3
+    },
+    {
+      "idx": 39,
+      "path": "fast",
+      "time_ms": 0.09512901306152344,
+      "template": 6
+    },
+    {
+      "idx": 40,
+      "path": "fast",
+      "time_ms": 0.09584426879882812,
+      "template": 2
+    },
+    {
+      "idx": 41,
+      "path": "fast",
+      "time_ms": 0.10013580322265625,
+      "template": 2
+    },
+    {
+      "idx": 42,
+      "path": "fast",
+      "time_ms": 0.2002716064453125,
+      "template": 1
+    },
+    {
+      "idx": 43,
+      "path": "fast",
+      "time_ms": 0.11229515075683594,
+      "template": 6
+    },
+    {
+      "idx": 44,
+      "path": "fast",
+      "time_ms": 0.1049041748046875,
+      "template": 3
+    },
+    {
+      "idx": 45,
+      "path": "fast",
+      "time_ms": 0.1201629638671875,
+      "template": 0
+    },
+    {
+      "idx": 46,
+      "path": "fast",
+      "time_ms": 0.12278556823730469,
+      "template": 0
+    },
+    {
+      "idx": 47,
+      "path": "fast",
+      "time_ms": 0.12183189392089844,
+      "template": 1
+    },
+    {
+      "idx": 48,
+      "path": "fast",
+      "time_ms": 0.09822845458984375,
+      "template": 6
+    },
+    {
+      "idx": 49,
+      "path": "fast",
+      "time_ms": 0.10800361633300781,
+      "template": 8
+    },
+    {
+      "idx": 50,
+      "path": "fast",
+      "time_ms": 0.10704994201660156,
+      "template": 2
+    }
+  ],
+  "final": {
+    "total_queries": 50,
+    "fast_path_hits": 39,
+    "hit_rate_pct": 78.0,
+    "knowledge_size": 11
+  }
+}

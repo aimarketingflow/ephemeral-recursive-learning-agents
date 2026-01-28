@@ -394,8 +394,9 @@ Output a JSON object with:
         
         # Parse the abstraction (in production, use proper JSON parsing)
         # For now, create a learning from the analysis
-        # Get original query from context
+        # Get original query from context and SANITIZE it
         original_query = self.context.get("query", "") if self.context else ""
+        sanitized_query = self._sanitize_pii(original_query)
         
         learning = Learning(
             pattern=self._extract_field(abstraction, "pattern", "unknown_pattern"),
@@ -403,7 +404,7 @@ Output a JSON object with:
             classification=self._extract_field(abstraction, "classification", "unknown"),
             confidence=self._extract_float(abstraction, "confidence", 0.5),
             recommended_response=self._extract_field(abstraction, "recommended_response", "investigate"),
-            original_query=original_query,
+            original_query=sanitized_query,
         )
         
         self.learnings.append(learning)
@@ -435,6 +436,45 @@ Output a JSON object with:
             return float(value)
         except ValueError:
             return default
+    
+    def _sanitize_pii(self, text: str) -> str:
+        """
+        Remove PII from text, replacing with abstract placeholders.
+        
+        This is critical for privacy-by-design: we keep the semantic
+        meaning but remove identifying information.
+        """
+        import re
+        
+        sanitized = text
+        
+        # Email addresses -> [EMAIL]
+        sanitized = re.sub(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', '[EMAIL]', sanitized)
+        
+        # IP addresses -> [IP_ADDRESS]
+        sanitized = re.sub(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', '[IP_ADDRESS]', sanitized)
+        
+        # SSN patterns -> [SSN]
+        sanitized = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[SSN]', sanitized)
+        
+        # Phone numbers -> [PHONE]
+        sanitized = re.sub(r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b', '[PHONE]', sanitized)
+        
+        # Credit card numbers -> [CREDIT_CARD]
+        sanitized = re.sub(r'\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b', '[CREDIT_CARD]', sanitized)
+        
+        # File paths with usernames -> [PATH]
+        sanitized = re.sub(r'/Users/[^/\s]+', '/Users/[USER]', sanitized)
+        sanitized = re.sub(r'/home/[^/\s]+', '/home/[USER]', sanitized)
+        
+        # Domain names that look internal -> [INTERNAL_DOMAIN]
+        sanitized = re.sub(r'\b[a-zA-Z0-9-]+\.(internal|local|corp|private)\.[a-zA-Z]{2,}\b', '[INTERNAL_DOMAIN]', sanitized)
+        sanitized = re.sub(r'\binternal\.[a-zA-Z0-9.-]+\b', '[INTERNAL_DOMAIN]', sanitized)
+        
+        # MAC addresses -> [MAC_ADDRESS]
+        sanitized = re.sub(r'\b([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})\b', '[MAC_ADDRESS]', sanitized)
+        
+        return sanitized
     
     def distill_to_base(self):
         """

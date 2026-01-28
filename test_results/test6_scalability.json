@@ -1,0 +1,40 @@
+{
+  "test": "scalability_simulation",
+  "timestamp": "2026-01-27T19:04:46.721612",
+  "measurements": [
+    {
+      "agents": 1,
+      "total_memory_mb": 0.0036678314208984375,
+      "memory_per_agent_kb": 3.755859375
+    },
+    {
+      "agents": 5,
+      "total_memory_mb": 0.016786575317382812,
+      "memory_per_agent_kb": 3.437890625
+    },
+    {
+      "agents": 10,
+      "total_memory_mb": 0.029623031616210938,
+      "memory_per_agent_kb": 3.0333984375
+    },
+    {
+      "agents": 20,
+      "total_memory_mb": 0.05241107940673828,
+      "memory_per_agent_kb": 2.683447265625
+    }
+  ],
+  "note": "Python GIL limits threading; real scaling is horizontal (serverless)",
+  "baseline": {
+    "queries": 20,
+    "time_s": 0.005624055862426758,
+    "qps": 3556.1524439357327,
+    "memory_mb": 0.020030975341796875
+  },
+  "knowledge_efficiency": {
+    "patterns_learned": 9,
+    "total_memory_kb": 17.2099609375,
+    "memory_per_pattern_kb": 1.9122178819444444
+  },
+  "memory_efficiency": 0.7144695787831513,
+  "scales_linearly": true
+}

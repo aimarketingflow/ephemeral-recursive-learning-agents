@@ -1,0 +1,42 @@
+{
+  "test": "extended_scalability",
+  "timestamp": "2026-01-27T20:14:44.350421",
+  "measurements": [
+    {
+      "agents": 1,
+      "total_kb": 3.54,
+      "per_agent_kb": 3.54
+    },
+    {
+      "agents": 5,
+      "total_kb": 15.94,
+      "per_agent_kb": 3.19
+    },
+    {
+      "agents": 10,
+      "total_kb": 28.66,
+      "per_agent_kb": 2.87
+    },
+    {
+      "agents": 20,
+      "total_kb": 55.71,
+      "per_agent_kb": 2.79
+    },
+    {
+      "agents": 30,
+      "total_kb": 80.6,
+      "per_agent_kb": 2.69
+    },
+    {
+      "agents": 40,
+      "total_kb": 107.41,
+      "per_agent_kb": 2.69
+    },
+    {
+      "agents": 50,
+      "total_kb": 137.3,
+      "per_agent_kb": 2.75
+    }
+  ],
+  "efficiency_ratio": 0.777
+}

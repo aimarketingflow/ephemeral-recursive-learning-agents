@@ -1,0 +1,33 @@
+{
+  "test": "privacy_verification",
+  "timestamp": "2026-01-27T19:04:46.721052",
+  "pii_items_tested": [
+    {
+      "type": "email",
+      "value": "john.doe@secretcorp.com"
+    },
+    {
+      "type": "ip",
+      "value": "192.168.100.55"
+    },
+    {
+      "type": "ssn",
+      "value": "123-45-6789"
+    },
+    {
+      "type": "phone",
+      "value": "555-123-4567"
+    },
+    {
+      "type": "name",
+      "value": "John Doe"
+    },
+    {
+      "type": "domain",
+      "value": "internal.secretcorp.com"
+    }
+  ],
+  "pii_found_in_index": [],
+  "pii_leaked": 0,
+  "privacy_test_passed": true
+}

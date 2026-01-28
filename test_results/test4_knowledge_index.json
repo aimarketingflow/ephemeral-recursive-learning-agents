@@ -1,0 +1,48 @@
+[
+  {
+    "learning": {
+      "pattern": "unauthorized_process_network_activity",
+      "indicators": [
+        "unknown_process",
+        "outbound_connection",
+        "blocked_by_firewall"
+      ],
+      "classification": "potential_threat",
+      "confidence": 0.7,
+      "recommended_response": "investigate_process_origin",
+      "original_query": "LuLu firewall blocked ruby connecting to [IP_ADDRESS]",
+      "timestamp": "2026-01-27T19:04:46.720052"
+    },
+    "text": "LuLu firewall blocked ruby connecting to [IP_ADDRESS] unauthorized_process_network_activity unknown_process outbound_connection blocked_by_firewall potential_threat"
+  },
+  {
+    "learning": {
+      "pattern": "unknown_pattern",
+      "indicators": [
+        "unknown_indicator"
+      ],
+      "classification": "potential_c2_communication",
+      "confidence": 0.85,
+      "recommended_response": "investigate",
+      "original_query": "C2 beacon detected with 60 second intervals",
+      "timestamp": "2026-01-27T19:04:46.720138"
+    },
+    "text": "C2 beacon detected with 60 second intervals unknown_pattern unknown_indicator potential_c2_communication"
+  },
+  {
+    "learning": {
+      "pattern": "unauthorized_process_network_activity",
+      "indicators": [
+        "unknown_process",
+        "outbound_connection",
+        "blocked_by_firewall"
+      ],
+      "classification": "potential_threat",
+      "confidence": 0.7,
+      "recommended_response": "investigate_process_origin",
+      "original_query": "SQL injection attempt in login form",
+      "timestamp": "2026-01-27T19:04:46.720212"
+    },
+    "text": "SQL injection attempt in login form unauthorized_process_network_activity unknown_process outbound_connection blocked_by_firewall potential_threat"
+  }
+]

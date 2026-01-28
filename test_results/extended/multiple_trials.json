@@ -1,0 +1,44 @@
+{
+  "test": "multiple_trials",
+  "timestamp": "2026-01-27T20:14:44.378064",
+  "num_trials": 5,
+  "queries_per_trial": 200,
+  "trials": [
+    {
+      "trial": 1,
+      "fast_hits": 180,
+      "hit_rate": 90.0,
+      "knowledge_size": 20
+    },
+    {
+      "trial": 2,
+      "fast_hits": 184,
+      "hit_rate": 92.0,
+      "knowledge_size": 16
+    },
+    {
+      "trial": 3,
+      "fast_hits": 180,
+      "hit_rate": 90.0,
+      "knowledge_size": 20
+    },
+    {
+      "trial": 4,
+      "fast_hits": 181,
+      "hit_rate": 90.5,
+      "knowledge_size": 19
+    },
+    {
+      "trial": 5,
+      "fast_hits": 183,
+      "hit_rate": 91.5,
+      "knowledge_size": 17
+    }
+  ],
+  "summary": {
+    "mean_hit_rate": 90.8,
+    "std_hit_rate": 0.81,
+    "min_hit_rate": 90.0,
+    "max_hit_rate": 92.0
+  }
+}

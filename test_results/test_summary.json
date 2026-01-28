@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-01-27T19:04:46.748806",
+  "tests": {
+    "fast_path_efficiency": {
+      "final_hit_rate": "78.0%",
+      "knowledge_learned": 11
+    },
+    "response_time": {
+      "fast_path_ms": "0.10",
+      "slow_path_ms": "0.10",
+      "speedup": "1.0x"
+    },
+    "memory_usage": {
+      "growth_per_query_kb": "0.45",
+      "peak_mb": "0.03"
+    },
+    "knowledge_retention": {
+      "passed": true,
+      "patterns_retained": "3/3"
+    },
+    "privacy": {
+      "passed": true,
+      "pii_leaked": 0
+    },
+    "scalability": {
+      "memory_efficiency": "0.71x",
+      "scales_linearly": true,
+      "kb_per_pattern": "1.91"
+    }
+  }
+}
