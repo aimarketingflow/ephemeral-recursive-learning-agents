@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERLA: Ephemeral Recursive Learning Agents - Whitepaper</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a2e;
+            --text-muted: #5a5a7a;
+            --purple: #8b5cf6;
+            --purple-dark: #7c3aed;
+            --dark-blue: #1e3a5f;
+            --orange: #f97316;
+            --orange-light: #fb923c;
+            --accent: #8b5cf6;
+            --accent-secondary: #1e3a5f;
+            --accent-tertiary: #f97316;
+            --border: #e5e7eb;
+            --code-bg: #f8fafc;
+            --highlight: #fef3c7;
+            --gradient-start: #8b5cf6;
+            --gradient-end: #1e3a5f;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0a0a1a;
+                --text: #e2e8f0;
+                --text-muted: #a0a0c0;
+                --purple: #a78bfa;
+                --purple-dark: #8b5cf6;
+                --dark-blue: #3b82f6;
+                --orange: #fb923c;
+                --orange-light: #fdba74;
+                --accent: #a78bfa;
+                --accent-secondary: #3b82f6;
+                --accent-tertiary: #fb923c;
+                --border: #334155;
+                --code-bg: #1e1e2e;
+                --highlight: #422006;
+                --gradient-start: #a78bfa;
+                --gradient-end: #3b82f6;
+            }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Georgia', 'Times New Roman', serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.8; 
+            max-width: 850px; 
+            margin: 0 auto; 
+            padding: 2rem; 
+        }
+        .header-banner {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: white;
+        }
+        .logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+        h1, h2, h3, h4 { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.3; margin-top: 2rem; }
+        h1 { font-size: 2rem; text-align: center; margin-bottom: 0.5rem; color: white; margin-top: 0; }
+        h2 { 
+            font-size: 1.4rem; 
+            border-bottom: 3px solid transparent;
+            border-image: linear-gradient(90deg, var(--purple), var(--orange)) 1;
+            padding-bottom: 0.5rem; 
+            margin-top: 2.5rem;
+            color: var(--purple-dark);
+        }
+        h3 { font-size: 1.15rem; color: var(--dark-blue); }
+        h4 { font-size: 1rem; color: var(--orange); }
+        p { margin: 1rem 0; text-align: justify; }
+        .subtitle { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 0.5rem; text-align: center; }
+        .author-line { color: rgba(255,255,255,0.8); font-size: 0.95rem; margin-top: 0.5rem; font-weight: 500; letter-spacing: 0.5px; }
+        .meta { text-align: center; color: var(--text-muted); margin-bottom: 2rem; font-family: sans-serif; font-size: 0.9rem; }
+        .meta strong { color: var(--purple); }
+        .abstract { 
+            background: linear-gradient(135deg, rgba(139,92,246,0.1) 0%, rgba(30,58,95,0.1) 100%);
+            border-left: 4px solid var(--purple); 
+            padding: 1.5rem; 
+            margin: 2rem 0; 
+            border-radius: 0 8px 8px 0;
+        }
+        .abstract h2 { border: none; margin-top: 0; font-size: 1.2rem; color: var(--purple); }
+        code { font-family: 'SF Mono', Monaco, monospace; background: var(--code-bg); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.85rem; color: var(--orange); }
+        pre { background: var(--code-bg); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0; font-size: 0.8rem; line-height: 1.5; border: 1px solid var(--border); }
+        pre code { background: none; padding: 0; color: var(--text); }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; border-radius: 8px; overflow: hidden; }
+        th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; }
+        th { 
+            background: linear-gradient(135deg, var(--purple) 0%, var(--dark-blue) 100%);
+            font-family: sans-serif; 
+            color: white;
+            font-weight: 600;
+        }
+        tr:nth-child(even) { background: rgba(139,92,246,0.05); }
+        .diagram { 
+            background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+            padding: 1.5rem; 
+            border-radius: 8px; 
+            font-family: 'SF Mono', Monaco, monospace; 
+            font-size: 0.7rem; 
+            line-height: 1.3; 
+            overflow-x: auto; 
+            white-space: pre; 
+            margin: 1rem 0;
+            color: #a0a0c0;
+            border: 1px solid var(--purple);
+        }
+        .highlight { background: linear-gradient(90deg, rgba(249,115,22,0.3), rgba(249,115,22,0.1)); padding: 0.1rem 0.4rem; border-radius: 3px; }
+        ul, ol { margin: 1rem 0 1rem 2rem; }
+        li { margin: 0.5rem 0; }
+        li::marker { color: var(--orange); }
+        .keywords { font-style: italic; color: var(--text-muted); }
+        .theorem { 
+            background: linear-gradient(135deg, rgba(30,58,95,0.1) 0%, rgba(139,92,246,0.1) 100%);
+            border: 1px solid var(--dark-blue); 
+            padding: 1rem; 
+            margin: 1rem 0; 
+            border-radius: 8px; 
+        }
+        .theorem-title { font-weight: bold; color: var(--purple); }
+        blockquote { border-left: 4px solid var(--orange); padding-left: 1rem; margin: 1rem 0; color: var(--text-muted); font-style: italic; }
+        .citation { font-size: 0.85rem; }
+        footer { 
+            margin-top: 3rem; 
+            padding: 2rem; 
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            border-radius: 12px;
+            text-align: center; 
+            color: white;
+            font-size: 0.85rem; 
+        }
+        footer a { color: var(--orange-light); }
+        footer strong { color: white; }
+        .success { color: #22c55e; }
+        .warning { color: var(--orange); }
+        .check { color: #22c55e; font-weight: bold; font-size: 1.2em; }
+        .check-bold { color: #22c55e; font-weight: bold; font-size: 1.4em; text-shadow: 0 0 8px rgba(34,197,94,0.5); }
+        .cross { color: #ef4444; font-weight: bold; font-size: 1.2em; }
+        .partial { color: #f59e0b; font-weight: 500; font-style: italic; }
+        .highlight-row { background: linear-gradient(90deg, rgba(34,197,94,0.15), rgba(139,92,246,0.15)) !important; }
+        .highlight-row td { font-weight: 600; }
+        .comparison-table td:not(:first-child) { text-align: center; }
+        @media print { 
+            body { max-width: 100%; } 
+            .diagram { font-size: 0.6rem; }
+            .header-banner, footer { background: var(--purple) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#8b5cf6',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#a78bfa',
+                lineColor: '#f97316',
+                secondaryColor: '#1e3a5f',
+                tertiaryColor: '#0f172a'
+            }
+        });
+    </script>
+</head>
+<body>
+    <article>
+        <div class="header-banner">
+            <img src="../ERLA_whitepaper_diagrams/aimf-logo.webp" alt="AIMF Logo" class="logo">
+            <h1>Ephemeral Recursive Learning Agents</h1>
+            <p class="subtitle">A Privacy-Preserving Architecture for Continuous AI Improvement</p>
+            <p class="author-line">Hana Omori | AIMF LLC</p>
+        </div>
+        
+        <div class="meta">
+            <p><strong>Date:</strong> January 29, 2026 | <strong>Version:</strong> 1.1 (with experimental results)</p>
+        </div>
+
+        <div class="abstract">
+            <h2>Abstract</h2>
+            <p>We present <strong>Ephemeral Recursive Learning Agents (ERLA)</strong>, a novel architecture for AI systems that continuously improve while maintaining strict privacy guarantees. Unlike traditional lifelong learning approaches where agents persist and accumulate data, ERLA spawns short-lived "virtual agents" for each task that analyze, learn, and then self-destruct—leaving only abstract, privacy-safe knowledge distillations that improve a shared base layer.</p>
+            <p>Our architecture introduces three key innovations: (1) <strong>Ephemeral Agent Lifecycle</strong>: Agents spawn per-task, extract generalizable learnings, distill to base layer, then securely destroy all sensitive context; (2) <strong>Two-Speed Response System</strong>: A fast path (~10ms) handles known patterns while a slow path handles novel situations; (3) <strong>Recursive Base Layer Improvement</strong>: Each agent's distilled learnings automatically improve both the knowledge index and periodically retrain the LoRA adapter.</p>
+            <p class="keywords"><strong>Keywords:</strong> Ephemeral agents, privacy-preserving AI, continuous learning, knowledge distillation, LoRA, recursive self-improvement</p>
+        </div>
+
+        <h2>1. Introduction</h2>
+        
+        <h3>1.1 The Problem: Learning vs Privacy</h3>
+        <p>Modern AI systems face a fundamental tension: <span class="highlight">to improve, they must learn from data; but to preserve privacy, they must not retain data</span>. This creates a seemingly impossible constraint for domains handling sensitive information.</p>
+        
+        <p>Current approaches fall into two inadequate categories:</p>
+        <ul>
+            <li><strong>Static Models:</strong> Train once, deploy forever. Cannot adapt to new patterns without expensive retraining.</li>
+            <li><strong>Persistent Learning Systems:</strong> Continuously learn but accumulate sensitive data, creating privacy risks and legal liability.</li>
+        </ul>
+
+        <h3>1.2 Our Contribution: Ephemeral Recursive Learning</h3>
+        <p>We propose a third approach: <strong>agents that learn and then die, leaving only their wisdom behind</strong>.</p>
+        
+        <p>The key insight is that <em>knowledge can be abstracted from data</em>. A security analyst who investigates a breach involving specific identifiers learns the abstract pattern—not the specific details.</p>
+
+        <div class="mermaid">
+flowchart TB
+    subgraph BASE["🔒 BASE LAYER (Persistent)"]
+        direction LR
+        BM["🧠 Base Model&lt;br/&gt;(Frozen)"]
+        LA["⚡ LoRA Adapter&lt;br/&gt;(Evolving)"]
+        KI["📚 Knowledge&lt;br/&gt;Index"]
+    end
+    
+    subgraph AGENTS["👻 AGENT LAYER (Ephemeral)"]
+        direction LR
+        A1["Agent 1&lt;br/&gt;Task A"]
+        A2["Agent 2&lt;br/&gt;Task B"]
+        A3["Agent 3&lt;br/&gt;Task C"]
+        AN["Agent N&lt;br/&gt;Task N"]
+    end
+    
+    A1 & A2 & A3 & AN -->|"Distilled Learnings"| LA
+    A1 & A2 & A3 & AN -->|"Abstract Patterns"| KI
+    
+    LIFECYCLE["SPAWN → ANALYZE → LEARN → DISTILL → DESTROY"]
+    
+    AGENTS --> LIFECYCLE
+    
+    style BASE fill:#1e3a5f,stroke:#8b5cf6,stroke-width:2px,color:#fff
+    style AGENTS fill:#2d1b4e,stroke:#f97316,stroke-width:2px,color:#fff
+    style BM fill:#3b82f6,stroke:#fff,color:#fff
+    style LA fill:#8b5cf6,stroke:#fff,color:#fff
+    style KI fill:#f97316,stroke:#fff,color:#fff
+    style A1 fill:#4c1d95,stroke:#a78bfa,color:#fff
+    style A2 fill:#4c1d95,stroke:#a78bfa,color:#fff
+    style A3 fill:#4c1d95,stroke:#a78bfa,color:#fff
+    style AN fill:#4c1d95,stroke:#a78bfa,color:#fff
+    style LIFECYCLE fill:#0f172a,stroke:#f97316,color:#fb923c
+        </div>
+
+        <h2>2. Related Work</h2>
+        
+        <p>We surveyed existing approaches and identified a gap:</p>
+        
+        <table class="comparison-table">
+            <tr>
+                <th>Approach</th>
+                <th>Continuous Learning</th>
+                <th>Privacy Preserving</th>
+                <th>Ephemeral Agents</th>
+            </tr>
+            <tr>
+                <td>Lifelong Learning LLM Agents [1]</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+                <td>Knowledge Distillation [2]</td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="partial">Partial</span></td>
+                <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+                <td>RAG Systems [3]</td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+                <td>Federated Learning [5]</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span></td>
+            </tr>
+            <tr class="highlight-row">
+                <td><strong>ERLA (Ours)</strong></td>
+                <td><span class="check-bold">✓</span></td>
+                <td><span class="check-bold">✓</span></td>
+                <td><span class="check-bold">✓</span></td>
+            </tr>
+        </table>
+
+        <h2>3. Ephemeral Agent Lifecycle</h2>
+        
+        <p>Each virtual agent follows a five-phase lifecycle:</p>
+
+        <h3>Phase 1: Spawn</h3>
+        <p>Agent is created with <em>references</em> to shared base layer components (not copies), plus ephemeral context for the specific task.</p>
+
+        <h3>Phase 2: Analyze</h3>
+        <p>Agent processes the task using the two-speed system: fast path for known patterns, slow path for novel situations.</p>
+
+        <h3>Phase 3: Learn (Knowledge Abstraction)</h3>
+        <p>The critical innovation—converting specific findings into abstract patterns:</p>
+        
+        <table>
+            <tr>
+                <th>Specific (Dies)</th>
+                <th>Abstract (Lives)</th>
+            </tr>
+            <tr>
+                <td>"john.doe@company.com"</td>
+                <td>"internal_user"</td>
+            </tr>
+            <tr>
+                <td>"192.168.1.50"</td>
+                <td>"internal_ip"</td>
+            </tr>
+            <tr>
+                <td>"mimikatz.exe"</td>
+                <td>"credential_dump_tool"</td>
+            </tr>
+            <tr>
+                <td>Full incident report</td>
+                <td>Pattern: "insider_threat"</td>
+            </tr>
+        </table>
+
+        <h3>Phase 4: Distill</h3>
+        <p>Abstract learnings are pushed to the base layer: knowledge index (fast path) and training buffer (slow path).</p>
+
+        <h3>Phase 5: Destroy</h3>
+        <p>Cryptographic erasure of all sensitive data. Only abstract learnings survive.</p>
+
+        <h2>4. Two-Speed Response System</h2>
+
+        <div class="mermaid">
+flowchart TD
+    Q["📥 INCOMING QUERY"]
+    
+    Q --> KI["🔍 Knowledge Index&lt;br/&gt;(Vector Search)"]
+    
+    KI --> MATCH{{"Match > 90%?"}}
+    
+    MATCH -->|"✅ YES"| FAST["⚡ FAST PATH&lt;br/&gt;~10ms&lt;br/&gt;Return cached response"]
+    MATCH -->|"❌ NO"| SLOW["🐢 SLOW PATH&lt;br/&gt;~1-5s&lt;br/&gt;Spawn agent + Full LLM"]
+    
+    SLOW --> LEARN["📝 Extract Learning&lt;br/&gt;Update Index&lt;br/&gt;Destroy Agent"]
+    
+    FAST --> RESP["📤 RESPONSE"]
+    LEARN --> RESP
+    
+    style Q fill:#1e3a5f,stroke:#8b5cf6,stroke-width:2px,color:#fff
+    style KI fill:#8b5cf6,stroke:#fff,color:#fff
+    style MATCH fill:#f97316,stroke:#fff,color:#fff
+    style FAST fill:#22c55e,stroke:#fff,color:#fff
+    style SLOW fill:#ef4444,stroke:#fff,color:#fff
+    style LEARN fill:#a78bfa,stroke:#fff,color:#fff
+    style RESP fill:#1e3a5f,stroke:#8b5cf6,stroke-width:2px,color:#fff
+        </div>
+
+        <p><strong>Key Property:</strong> The system gets faster as it learns more:</p>
+        
+        <table>
+            <tr>
+                <th>Time</th>
+                <th>Index Size</th>
+                <th>Fast Path Hit Rate</th>
+                <th>Avg Response</th>
+            </tr>
+            <tr>
+                <td>Day 1</td>
+                <td>54 patterns</td>
+                <td>~20%</td>
+                <td>~2s</td>
+            </tr>
+            <tr>
+                <td>Day 30</td>
+                <td>500 patterns</td>
+                <td>~60%</td>
+                <td>~800ms</td>
+            </tr>
+            <tr>
+                <td>Day 365</td>
+                <td>5000 patterns</td>
+                <td>~90%</td>
+                <td>~100ms</td>
+            </tr>
+        </table>
+
+        <h2>5. Security and Privacy Properties</h2>
+
+        <div class="theorem">
+            <p class="theorem-title">Theorem 1 (Data Non-Persistence)</p>
+            <p>No sensitive data persists beyond the lifetime of the agent that processed it.</p>
+            <p><em>Proof:</em> Sensitive data exists only in agent.context and agent.memory. These are securely zeroed in destroy(). Only abstract learnings (containing no sensitive data) are distilled to base layer. Therefore, after agent destruction, no sensitive data remains. ∎</p>
+        </div>
+
+        <h3>Compliance Support</h3>
+        <ul>
+            <li><strong>GDPR:</strong> Right to erasure satisfied by agent destruction</li>
+            <li><strong>HIPAA:</strong> PHI never persists beyond session</li>
+            <li><strong>SOC 2:</strong> Audit trail of abstract patterns, not sensitive data</li>
+        </ul>
+
+        <h2>6. Recursive Improvement Mechanism</h2>
+
+        <div class="mermaid">
+flowchart LR
+    subgraph TIME["TIME →"]
+        direction LR
+        V1["v1.0&lt;br/&gt;54 patterns"]
+        V2["v1.1&lt;br/&gt;154 patterns"]
+        V3["v1.2&lt;br/&gt;254 patterns"]
+        V4["v1.3&lt;br/&gt;354 patterns"]
+        VN["v1.N&lt;br/&gt;∞ patterns"]
+    end
+    
+    V1 -->|"+100"| V2 -->|"+100"| V3 -->|"+100"| V4 -->|"..."| VN
+    
+    subgraph AGENTS["Agents Contributing"]
+        AG1["Agents&lt;br/&gt;1-100"]
+        AG2["Agents&lt;br/&gt;101-200"]
+        AG3["Agents&lt;br/&gt;201-300"]
+    end
+    
+    AG1 -->|"learnings"| V2
+    AG2 -->|"learnings"| V3
+    AG3 -->|"learnings"| V4
+    
+    style V1 fill:#1e3a5f,stroke:#8b5cf6,color:#fff
+    style V2 fill:#3b5998,stroke:#8b5cf6,color:#fff
+    style V3 fill:#5b7bb8,stroke:#8b5cf6,color:#fff
+    style V4 fill:#7b9bd8,stroke:#8b5cf6,color:#fff
+    style VN fill:#8b5cf6,stroke:#fff,color:#fff
+    style AG1 fill:#f97316,stroke:#fff,color:#fff
+    style AG2 fill:#f97316,stroke:#fff,color:#fff
+    style AG3 fill:#f97316,stroke:#fff,color:#fff
+        </div>
+
+        <p><strong>The system improves automatically with no human intervention.</strong></p>
+
+        <h2>7. Experimental Results</h2>
+
+        <p>We implemented ERLA in a security log analysis system ("ShubiCore") and evaluated its performance across multiple dimensions. Due to proprietary constraints, we report normalized and aggregate metrics.</p>
+
+        <h3>7.1 Threat Intelligence Integration</h3>
+        <p>The base layer was initialized with curated threat intelligence from multiple open-source feeds:</p>
+        
+        <table>
+            <tr>
+                <th>Data Type</th>
+                <th>Approximate Scale</th>
+                <th>Source Category</th>
+            </tr>
+            <tr>
+                <td>Malicious Domains</td>
+                <td>~47,000</td>
+                <td>OSINT feeds (aggregated)</td>
+            </tr>
+            <tr>
+                <td>Malicious IPs</td>
+                <td>~18,000</td>
+                <td>Threat intelligence providers</td>
+            </tr>
+            <tr>
+                <td>Detection Rules</td>
+                <td>90+</td>
+                <td>Custom + community patterns</td>
+            </tr>
+            <tr>
+                <td>Behavioral Signatures</td>
+                <td>~600</td>
+                <td>Mobile threat research</td>
+            </tr>
+        </table>
+
+        <h3>7.2 Detection Performance</h3>
+        <p>We evaluated the system against a curated test suite of 58 scenarios spanning multiple attack categories:</p>
+
+        <table>
+            <tr>
+                <th>Attack Category</th>
+                <th>Test Cases</th>
+                <th>Detection Rate</th>
+                <th>Avg. Confidence</th>
+            </tr>
+            <tr>
+                <td>Command & Control (C2)</td>
+                <td>12</td>
+                <td>100%</td>
+                <td>94%</td>
+            </tr>
+            <tr>
+                <td>Credential Theft</td>
+                <td>8</td>
+                <td>100%</td>
+                <td>96%</td>
+            </tr>
+            <tr>
+                <td>Persistence Mechanisms</td>
+                <td>10</td>
+                <td>100%</td>
+                <td>92%</td>
+            </tr>
+            <tr>
+                <td>Data Exfiltration</td>
+                <td>8</td>
+                <td>100%</td>
+                <td>91%</td>
+            </tr>
+            <tr>
+                <td>Mobile Threats (Stalkerware)</td>
+                <td>10</td>
+                <td>100%</td>
+                <td>95%</td>
+            </tr>
+            <tr>
+                <td>Benign (False Positive Test)</td>
+                <td>10</td>
+                <td>100% correct</td>
+                <td>89%</td>
+            </tr>
+        </table>
+
+        <p><strong>Key Finding:</strong> The hybrid detection approach (rules + threat intelligence + pattern matching) achieved 100% detection across all malicious test cases with zero false positives on benign samples.</p>
+
+        <h3>7.3 Two-Speed System Performance</h3>
+        <p>We measured response times across the fast path (cached patterns) and slow path (full analysis):</p>
+
+        <table>
+            <tr>
+                <th>Path</th>
+                <th>Median Latency</th>
+                <th>95th Percentile</th>
+                <th>Use Case</th>
+            </tr>
+            <tr>
+                <td>Fast Path (Index Hit)</td>
+                <td>&lt;50ms</td>
+                <td>&lt;100ms</td>
+                <td>Known threat patterns</td>
+            </tr>
+            <tr>
+                <td>Slow Path (Full Analysis)</td>
+                <td>~300ms</td>
+                <td>~500ms</td>
+                <td>Novel/complex logs</td>
+            </tr>
+            <tr>
+                <td>Slow Path + LLM</td>
+                <td>~2-5s</td>
+                <td>~8s</td>
+                <td>Deep analysis (optional)</td>
+            </tr>
+        </table>
+
+        <h3>7.4 Privacy Validation</h3>
+        <p>We verified the ephemeral agent properties through systematic testing:</p>
+        <ul>
+            <li><strong>Memory Analysis:</strong> Post-destruction heap dumps showed zero retention of input data</li>
+            <li><strong>Knowledge Abstraction:</strong> 100% of distilled learnings passed PII detection scans</li>
+            <li><strong>Audit Trail:</strong> Only abstract pattern identifiers logged, no raw data</li>
+        </ul>
+
+        <h3>7.5 Limitations</h3>
+        <p>We acknowledge the following limitations of our evaluation:</p>
+        <ul>
+            <li>Test suite is curated, not representative of all real-world attack diversity</li>
+            <li>Long-term recursive improvement (365+ days) not yet validated in production</li>
+            <li>LLM-based deep analysis requires GPU resources not always available offline</li>
+            <li>Specific threat feed sources and rule details remain proprietary</li>
+        </ul>
+
+        <h2>8. Conclusion</h2>
+
+        <p>We have presented Ephemeral Recursive Learning Agents (ERLA), a novel architecture that resolves the tension between continuous learning and privacy preservation. By spawning short-lived agents that distill abstract knowledge before self-destructing, ERLA achieves:</p>
+
+        <ol>
+            <li><strong>Continuous Improvement:</strong> Every interaction makes the system smarter</li>
+            <li><strong>Privacy by Design:</strong> Sensitive data never persists</li>
+            <li><strong>Performance Optimization:</strong> Two-speed system gets faster over time</li>
+            <li><strong>Resource Efficiency:</strong> Agents share base layer via references</li>
+        </ol>
+
+        <h2>9. Data Availability</h2>
+        <p>The ERLA architecture specification and reference implementation patterns are available at the repository listed below. Specific threat intelligence feeds, detection rules, and proprietary optimizations are not publicly released but may be available for academic collaboration upon request.</p>
+
+        <h2>References</h2>
+        
+        <ol class="citation">
+            <li>"Lifelong Learning of Large Language Model based Agents: A Roadmap." arXiv:2501.07278, January 2025.</li>
+            <li>Hinton, G., Vinyals, O., & Dean, J. "Distilling the Knowledge in a Neural Network." NeurIPS Workshop, 2015.</li>
+            <li>Lewis, P., et al. "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." NeurIPS, 2020.</li>
+            <li>Hu, E. J., et al. "LoRA: Low-Rank Adaptation of Large Language Models." ICLR, 2022.</li>
+            <li>McMahan, B., et al. "Communication-Efficient Learning of Deep Networks from Decentralized Data." AISTATS, 2017.</li>
+            <li>MITRE ATT&CK Framework. "Enterprise Techniques." https://attack.mitre.org/, 2024.</li>
+            <li>Coalition Against Stalkerware. "Stalkerware Indicators." https://stopstalkerware.org/, 2024.</li>
+        </ol>
+
+        <h2>Citation</h2>
+        <pre><code>@article{omori2026erla,
+  title={Ephemeral Recursive Learning Agents: A Privacy-Preserving 
+         Architecture for Continuous AI Improvement},
+  author={Omori, Hana},
+  journal={Zenodo},
+  year={2026},
+  doi={10.5281/zenodo.18422395}
+}</code></pre>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;"><strong>DOI:</strong> <a href="https://doi.org/10.5281/zenodo.18422395" style="color: var(--orange);">10.5281/zenodo.18422395</a></p>
+
+        <footer>
+            <p><strong>Contact:</strong> hana.omori@aimarketingflow.com</p>
+            <p><strong>Repository:</strong> github.com/aimarketingflow/erla</p>
+            <p><strong>License:</strong> CC BY 4.0</p>
+            <p style="margin-top: 1rem;">Version 1.1 — January 29, 2026<br>© 2026 Hana Omori / AIMF. All rights reserved.</p>
+        </footer>
+    </article>
+</body>
+</html>
