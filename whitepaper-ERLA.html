@@ -230,7 +230,23 @@
             <li><strong>Persistent Learning Systems:</strong> Continuously learn but accumulate sensitive data, creating privacy risks and legal liability.</li>
         </ul>
 
-        <h3>1.3 Our Contribution: Ephemeral Recursive Learning</h3>
+        <h3>1.3 Methodological Inspiration: SEO Pattern Correlation</h3>
+        <p>The analytical approach underlying ERLA draws from a solved problem in search engine optimization. After Google's "(not provided)" update in October 2011—which expanded to hide nearly all organic keyword data by September 2013—SEO practitioners lost direct visibility into which keywords drove traffic.</p>
+        
+        <p>The solution required correlating incomplete signals across multiple data sources:</p>
+        <ul>
+            <li><strong>Ranking data:</strong> Which keywords each page ranked for (positions 1-30+)</li>
+            <li><strong>Estimated CTR curves:</strong> Click-through rates by position, adjusted for SERP features (rich snippets, ad packs, knowledge panels)</li>
+            <li><strong>Competitive intelligence:</strong> 20-30 competitor pages per keyword, page 2-3 momentum tracking</li>
+            <li><strong>Conversion funnels:</strong> Which landing pages led to conversions, mapped back to keyword groups</li>
+            <li><strong>Multi-source correlation:</strong> Search Console, Analytics, Screaming Frog crawl data, rank trackers, backlink profiles</li>
+        </ul>
+        
+        <p>This work—performed across tens of thousands of keywords and hundreds of thousands of pages, often in Excel before modern tooling—required identifying patterns from partial information. The same discipline applies to security log analysis: correlating timestamps, IP patterns, process behaviors, and network flows to identify anomalies that no single signal would reveal.</p>
+        
+        <p>Tools like <a href="https://www.semrush.com/sensor/" style="color: var(--orange);">SEMrush Sensor</a> track algorithm volatility by monitoring SERP changes across keyword sets. ERLA applies analogous pattern-detection to security data: monitoring behavioral changes across log entries to identify when something deviates from baseline.</p>
+
+        <h3>1.4 Our Contribution: Ephemeral Recursive Learning</h3>
         <p>We propose a third approach: <strong>agents that learn and then die, leaving only their wisdom behind</strong>.</p>
         
         <p>The key insight is that <em>knowledge can be abstracted from data</em>. A security analyst who investigates a breach involving specific identifiers learns the abstract pattern—not the specific details.</p>
