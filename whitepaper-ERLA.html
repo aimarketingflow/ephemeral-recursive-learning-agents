@@ -76,12 +76,12 @@
             margin-top: 2.5rem;
             color: var(--purple-dark);
         }
-        h3 { font-size: 1.15rem; color: var(--dark-blue); }
         h4 { font-size: 1rem; color: var(--orange); }
         p { margin: 1rem 0; text-align: justify; }
         .subtitle { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 0.5rem; text-align: center; }
-        .author-line { color: rgba(255,255,255,0.8); font-size: 0.95rem; margin-top: 0.5rem; font-weight: 500; letter-spacing: 0.5px; }
+        .author-line { color: rgba(255,255,255,0.8); font-size: 0.95rem; margin-top: 0.5rem; font-weight: 500; letter-spacing: 0.5px; text-align: center; }
         .meta { text-align: center; color: var(--text-muted); margin-bottom: 2rem; font-family: sans-serif; font-size: 0.9rem; }
+        h3 { font-size: 1.15rem; color: var(--dark-blue); }
         .meta strong { color: var(--purple); }
         .abstract { 
             background: linear-gradient(135deg, rgba(139,92,246,0.1) 0%, rgba(30,58,95,0.1) 100%);
@@ -101,6 +101,7 @@
             font-family: sans-serif; 
             color: white;
             font-weight: 600;
+            text-align: center;
         }
         tr:nth-child(even) { background: rgba(139,92,246,0.05); }
         .diagram { 
@@ -147,6 +148,14 @@
         .check { color: #22c55e; font-weight: bold; font-size: 1.2em; }
         .check-bold { color: #22c55e; font-weight: bold; font-size: 1.4em; text-shadow: 0 0 8px rgba(34,197,94,0.5); }
         .cross { color: #ef4444; font-weight: bold; font-size: 1.2em; }
+        .faq-section { margin: 1.5rem 0; }
+        .faq-section h3 { 
+            color: var(--purple-light); 
+            margin-top: 1.5rem; 
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .faq-section p { margin-bottom: 1rem; }
         .partial { color: #f59e0b; font-weight: 500; font-style: italic; }
         .highlight-row { background: linear-gradient(90deg, rgba(34,197,94,0.15), rgba(139,92,246,0.15)) !important; }
         .highlight-row td { font-weight: 600; }
@@ -198,40 +207,105 @@
         <h3>1.1 The Problem: Learning vs Privacy</h3>
         <p>Modern AI systems face a fundamental tension: <span class="highlight">to improve, they must learn from data; but to preserve privacy, they must not retain data</span>. This creates a seemingly impossible constraint for domains handling sensitive information.</p>
         
+        <h3>1.2 Motivation: Consumer Forensic Analysis</h3>
+        <p>We developed ERLA specifically for <strong>forensic log analysis</strong>—helping everyday consumers identify signs of unauthorized access, stalkerware, or network intrusion from their own device data. Our goal: provide enterprise-grade security analysis <em>for free, offline, and completely private</em>.</p>
+        
+        <p>This use case demands the strongest privacy guarantees. Users analyzing their own logs may be investigating sensitive situations—domestic surveillance, corporate espionage, or personal safety threats. Their data must never leave their device, and the analysis tool itself must be trustworthy.</p>
+        
+        <div class="theorem">
+            <p class="theorem-title">🔒 Security Recommendations for Setup</p>
+            <p>For users who suspect active network compromise (e.g., WiFi pineapple attacks, man-in-the-middle, or router-level surveillance), we recommend:</p>
+            <ul>
+                <li><strong>Use a VPN</strong> during initial setup and model download to prevent interception</li>
+                <li><strong>Prefer wired ethernet</strong> over WiFi when possible to eliminate wireless attack vectors</li>
+                <li><strong>Verify checksums</strong> of downloaded model files against published hashes</li>
+                <li><strong>Disconnect from network</strong> before analyzing sensitive logs—the tool works 100% offline</li>
+            </ul>
+            <p>Once setup is complete, the system requires no network connection. Analysis runs entirely on-device.</p>
+        </div>
+        
         <p>Current approaches fall into two inadequate categories:</p>
         <ul>
             <li><strong>Static Models:</strong> Train once, deploy forever. Cannot adapt to new patterns without expensive retraining.</li>
             <li><strong>Persistent Learning Systems:</strong> Continuously learn but accumulate sensitive data, creating privacy risks and legal liability.</li>
         </ul>
 
-        <h3>1.2 Our Contribution: Ephemeral Recursive Learning</h3>
+        <h3>1.3 Our Contribution: Ephemeral Recursive Learning</h3>
         <p>We propose a third approach: <strong>agents that learn and then die, leaving only their wisdom behind</strong>.</p>
         
         <p>The key insight is that <em>knowledge can be abstracted from data</em>. A security analyst who investigates a breach involving specific identifiers learns the abstract pattern—not the specific details.</p>
 
         <div class="mermaid">
+flowchart LR
+    S1["①&lt;br/&gt;SPAWN"]
+    S2["②&lt;br/&gt;ANALYZE"]
+    S3["③&lt;br/&gt;LEARN"]
+    S4["④&lt;br/&gt;DISTILL"]
+    S5["⑤&lt;br/&gt;DESTROY"]
+    
+    S1 ==> S2 ==> S3 ==> S4 ==> S5
+    
+    style S1 fill:#22c55e,stroke:#fff,stroke-width:2px,color:#fff
+    style S2 fill:#3b82f6,stroke:#fff,stroke-width:2px,color:#fff
+    style S3 fill:#8b5cf6,stroke:#fff,stroke-width:2px,color:#fff
+    style S4 fill:#f97316,stroke:#fff,stroke-width:2px,color:#fff
+    style S5 fill:#ef4444,stroke:#fff,stroke-width:2px,color:#fff
+        </div>
+        
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;"><em>⚡ ERLA Lifecycle — Each agent follows this 5-step process</em></p>
+        
+        <table style="margin-top: 1rem;">
+            <tr>
+                <th style="width: 15%;">Step</th>
+                <th style="width: 25%;">Phase</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td style="text-align: center; font-size: 1.2em;">①</td>
+                <td><strong style="color: #22c55e;">SPAWN</strong></td>
+                <td>Agent created with references to base layer + ephemeral task context</td>
+            </tr>
+            <tr>
+                <td style="text-align: center; font-size: 1.2em;">②</td>
+                <td><strong style="color: #3b82f6;">ANALYZE</strong></td>
+                <td>Process task using two-speed system (fast path for known, slow path for novel)</td>
+            </tr>
+            <tr>
+                <td style="text-align: center; font-size: 1.2em;">③</td>
+                <td><strong style="color: #8b5cf6;">LEARN</strong></td>
+                <td>Extract patterns from analysis, identify reusable insights</td>
+            </tr>
+            <tr>
+                <td style="text-align: center; font-size: 1.2em;">④</td>
+                <td><strong style="color: #f97316;">DISTILL</strong></td>
+                <td>Abstract knowledge (strip PII), push to LoRA adapter + knowledge index</td>
+            </tr>
+            <tr>
+                <td style="text-align: center; font-size: 1.2em;">⑤</td>
+                <td><strong style="color: #ef4444;">DESTROY</strong></td>
+                <td>Agent terminated, all specific data purged, only abstractions survive</td>
+            </tr>
+        </table>
+        
+        <div class="mermaid" style="margin-top: 1.5rem;">
 flowchart TB
     subgraph BASE["🔒 BASE LAYER (Persistent)"]
         direction LR
-        BM["🧠 Base Model&lt;br/&gt;(Frozen)"]
-        LA["⚡ LoRA Adapter&lt;br/&gt;(Evolving)"]
-        KI["📚 Knowledge&lt;br/&gt;Index"]
+        BM["🧠 Base Model&lt;br/&gt;Frozen"]
+        LA["⚡ LoRA Adapter&lt;br/&gt;Evolving"]
+        KI["📚 Knowledge Index&lt;br/&gt;Growing"]
     end
     
-    subgraph AGENTS["👻 AGENT LAYER (Ephemeral)"]
+    subgraph AGENTS["👻 EPHEMERAL AGENTS"]
         direction LR
-        A1["Agent 1&lt;br/&gt;Task A"]
-        A2["Agent 2&lt;br/&gt;Task B"]
-        A3["Agent 3&lt;br/&gt;Task C"]
-        AN["Agent N&lt;br/&gt;Task N"]
+        A1["Agent A: Log Analysis"]
+        A2["Agent B: Threat Scan"]
+        A3["Agent C: Pattern Match"]
     end
     
-    A1 & A2 & A3 & AN -->|"Distilled Learnings"| LA
-    A1 & A2 & A3 & AN -->|"Abstract Patterns"| KI
-    
-    LIFECYCLE["SPAWN → ANALYZE → LEARN → DISTILL → DESTROY"]
-    
-    AGENTS --> LIFECYCLE
+    AGENTS -->|"④ Distilled Learnings"| LA
+    AGENTS -->|"④ Abstract Patterns"| KI
+    BASE -.-> AGENTS
     
     style BASE fill:#1e3a5f,stroke:#8b5cf6,stroke-width:2px,color:#fff
     style AGENTS fill:#2d1b4e,stroke:#f97316,stroke-width:2px,color:#fff
@@ -241,9 +315,9 @@ flowchart TB
     style A1 fill:#4c1d95,stroke:#a78bfa,color:#fff
     style A2 fill:#4c1d95,stroke:#a78bfa,color:#fff
     style A3 fill:#4c1d95,stroke:#a78bfa,color:#fff
-    style AN fill:#4c1d95,stroke:#a78bfa,color:#fff
-    style LIFECYCLE fill:#0f172a,stroke:#f97316,color:#fb923c
         </div>
+        
+        <p style="margin-top: 1rem;"><strong>Key insight:</strong> All agents are structurally identical—they differ only in their <em>task assignment</em>. Each agent contributes <strong>both</strong> model improvements (→ LoRA Adapter) <strong>and</strong> new patterns (→ Knowledge Index) at step ④ before being destroyed.</p>
 
         <h2>2. Related Work</h2>
         
@@ -287,6 +361,59 @@ flowchart TB
                 <td><span class="check-bold">✓</span></td>
             </tr>
         </table>
+
+        <h3>2.1 Comparison with RAG and Orchestration Frameworks</h3>
+        
+        <p>Two dominant paradigms exist for extending LLM capabilities: <strong>Retrieval-Augmented Generation (RAG)</strong> and <strong>orchestration frameworks</strong> like LangChain. ERLA takes a fundamentally different approach.</p>
+        
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>RAG Systems</th>
+                <th>LangChain/Orchestration</th>
+                <th>ERLA</th>
+            </tr>
+            <tr>
+                <td><strong>Knowledge Source</strong></td>
+                <td>External (retrieved at runtime)</td>
+                <td>External (API calls)</td>
+                <td>Internal (trained into model)</td>
+            </tr>
+            <tr>
+                <td><strong>Runtime Dependencies</strong></td>
+                <td>Vector DB + embeddings</td>
+                <td>Multiple APIs + tools</td>
+                <td>Single model file</td>
+            </tr>
+            <tr>
+                <td><strong>Offline Capability</strong></td>
+                <td><span class="partial">Partial</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td><strong>Privacy</strong></td>
+                <td>Data in vector DB</td>
+                <td>Data sent to APIs</td>
+                <td>Knowledge abstracted, data destroyed</td>
+            </tr>
+            <tr>
+                <td><strong>Complexity</strong></td>
+                <td>Medium</td>
+                <td>High</td>
+                <td>Low (after training)</td>
+            </tr>
+            <tr>
+                <td><strong>Best For</strong></td>
+                <td>Frequently changing data</td>
+                <td>Complex multi-tool workflows</td>
+                <td>Stable domain expertise, privacy-critical</td>
+            </tr>
+        </table>
+        
+        <p><strong>Key insight:</strong> RAG retrieves knowledge at query time; ERLA embeds knowledge at training time. For stable domain expertise (security patterns, compliance rules, specialized analysis), training eliminates retrieval overhead and external dependencies.</p>
+        
+        <p>LangChain excels at orchestrating complex workflows across multiple tools and APIs. ERLA focuses on a different problem: creating self-contained, privacy-preserving agents that improve over time without persistent data storage.</p>
 
         <h2>3. Ephemeral Agent Lifecycle</h2>
         
@@ -584,6 +711,34 @@ flowchart LR
         <h2>9. Data Availability</h2>
         <p>The ERLA architecture specification and reference implementation patterns are available at the repository listed below. Specific threat intelligence feeds, detection rules, and proprietary optimizations are not publicly released but may be available for academic collaboration upon request.</p>
 
+        <h2>10. Frequently Asked Questions</h2>
+        
+        <div class="faq-section">
+            <h3>Q: Isn't this just fine-tuning with extra steps?</h3>
+            <p><strong>A:</strong> LoRA is a <em>technique</em>; ERLA is an <em>architecture</em>. The innovation is the ephemeral agent lifecycle combined with knowledge abstraction. Fine-tuning alone doesn't address privacy (data persists), continuous learning (static after training), or recursive improvement. We provide the complete pipeline—and the "ephemeral" aspect (agents that learn and die, leaving only abstracted knowledge) is novel.</p>
+            
+            <h3>Q: Why not just use RAG?</h3>
+            <p><strong>A:</strong> RAG excels for frequently changing data (news, inventory, live documents). Training is better for stable domain expertise (security patterns, compliance rules, specialized analysis). RAG has runtime overhead (embedding, retrieval, context stuffing); training has zero runtime overhead since knowledge is in the weights. Additionally, RAG stores data in vector databases while ERLA abstracts knowledge and destroys data—a critical distinction for privacy-sensitive applications.</p>
+            
+            <h3>Q: How does this compare to LangChain?</h3>
+            <p><strong>A:</strong> LangChain is an orchestration framework for connecting LLMs to tools, databases, and APIs. ERLA is a training and deployment framework for creating your own model. They solve different problems and are complementary—you could use LangChain with an ERLA-trained model. The key difference: LangChain assumes you're using someone else's model; ERLA helps you create your own.</p>
+            
+            <h3>Q: Isn't offline AI a niche use case?</h3>
+            <p><strong>A:</strong> Privacy regulations (GDPR, HIPAA, SOC2) often require data to stay on-premises. Air-gapped environments (government, military, critical infrastructure) cannot use cloud APIs. Beyond compliance, offline AI eliminates API costs, reduces latency, and ensures reliability during outages. Enterprise spending on edge AI is projected to grow 20%+ annually through 2028.</p>
+            
+            <h3>Q: Can small models really match GPT-4 quality?</h3>
+            <p><strong>A:</strong> For general-purpose tasks, frontier models remain superior. However, task-specific fine-tuning closes the gap significantly for narrow domains. A 7B model trained on your data often outperforms GPT-4 <em>on your specific tasks</em>. The trade-off is generality for specialization—and for many applications, specialization wins.</p>
+            
+            <h3>Q: Is "ephemeral" just marketing terminology?</h3>
+            <p><strong>A:</strong> Ephemeral has a precise technical meaning: agents are destroyed after task completion. This is a deliberate architectural choice with real implications—no persistent memory of specific data, forced knowledge abstraction (can't rely on stored specifics), and privacy by design rather than by policy. Each agent instance is garbage-collected after distillation; only abstract patterns survive.</p>
+            
+            <h3>Q: Don't you need thousands of examples to train a good model?</h3>
+            <p><strong>A:</strong> LoRA fine-tuning is not training from scratch. The base model already has general knowledge; fine-tuning teaches style, format, and domain-specific patterns. 100-500 high-quality examples is standard for LoRA adaptation (see Stanford Alpaca, Vicuna). Quality matters more than quantity—100 excellent examples beat 10,000 mediocre ones.</p>
+            
+            <h3>Q: What are the genuine limitations?</h3>
+            <p><strong>A:</strong> We acknowledge: (1) Not suitable for rapidly changing data—use RAG instead; (2) Requires technical setup—not plug-and-play for non-developers; (3) Hardware requirements—8GB RAM minimum, 16GB+ recommended; (4) Image/vision support requires 16GB+ RAM; (5) Training requires some ML knowledge, though our wizard guide helps.</p>
+        </div>
+
         <h2>References</h2>
         
         <ol class="citation">
@@ -609,7 +764,8 @@ flowchart LR
 
         <footer>
             <p><strong>Contact:</strong> hana.omori@aimarketingflow.com</p>
-            <p><strong>Repository:</strong> github.com/aimarketingflow/erla</p>
+            <p><strong>Paper Repository:</strong> <a href="https://github.com/aimarketingflow/ephemeral-recursive-learning-agents" style="color: var(--orange-light);">github.com/aimarketingflow/ephemeral-recursive-learning-agents</a></p>
+            <p><strong>Model Setup:</strong> <a href="https://github.com/aimarketingflow/erla-model-setup" style="color: var(--orange-light);">github.com/aimarketingflow/erla-model-setup</a></p>
             <p><strong>License:</strong> CC BY 4.0</p>
             <p style="margin-top: 1rem;">Version 1.1 — January 29, 2026<br>© 2026 Hana Omori / AIMF. All rights reserved.</p>
         </footer>
