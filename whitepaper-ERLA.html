@@ -245,8 +245,62 @@
         <p>This work—performed across tens of thousands of keywords and hundreds of thousands of pages, often in Excel before modern tooling—required identifying patterns from partial information. The same discipline applies to security log analysis: correlating timestamps, IP patterns, process behaviors, and network flows to identify anomalies that no single signal would reveal.</p>
         
         <p>Tools like <a href="https://www.semrush.com/sensor/" style="color: var(--orange);">SEMrush Sensor</a> track algorithm volatility by monitoring SERP changes across keyword sets. ERLA applies analogous pattern-detection to security data: monitoring behavioral changes across log entries to identify when something deviates from baseline.</p>
+        
+        <p>This "dark period" lasted approximately 18 months (September 2013 – May 2015) until Google launched the Search Analytics report, which finally provided query-level data directly. The correlation methodology developed during this period—working with incomplete signals at massive scale—forms the analytical foundation of ERLA.</p>
 
-        <h3>1.4 Our Contribution: Ephemeral Recursive Learning</h3>
+        <h3>1.4 From SEO Correlation to Security Analysis</h3>
+        <p>The ERLA analysis engine applies the same multi-signal correlation approach to security logs:</p>
+        
+        <table class="comparison-table">
+            <tr>
+                <th>SEO Correlation (2013-2015)</th>
+                <th>ERLA Security Correlation</th>
+            </tr>
+            <tr>
+                <td>Keyword rankings across positions 1-30+</td>
+                <td>Process behaviors across severity levels</td>
+            </tr>
+            <tr>
+                <td>CTR curves adjusted for SERP features</td>
+                <td>Baseline deviation adjusted for time-of-day patterns</td>
+            </tr>
+            <tr>
+                <td>Competitor page momentum (page 2→1 movement)</td>
+                <td>Threat actor persistence (repeated access attempts)</td>
+            </tr>
+            <tr>
+                <td>Conversion funnel mapping to keyword groups</td>
+                <td>Attack chain mapping to entry vectors</td>
+            </tr>
+            <tr>
+                <td>Multi-source: GSC + GA + rank trackers + crawl data</td>
+                <td>Multi-source: system logs + network flows + auth logs + file access</td>
+            </tr>
+        </table>
+        
+        <p>The key insight: <strong>both problems involve identifying meaningful patterns from incomplete, noisy data at scale</strong>. The SEO methodology was proven effective on one of the most complex algorithms ever built—Google Search—processing tens of thousands of keywords across hundreds of thousands of pages. Security log analysis, while sensitive, operates on fundamentally simpler signal patterns.</p>
+
+        <h3>1.5 The BERT Connection: Shared Algorithmic Origins</h3>
+        <p>There is a deeper philosophical alignment between SEO pattern analysis and modern AI-based security detection: <strong>they share the same algorithmic ancestor</strong>.</p>
+        
+        <p>Google's BERT (Bidirectional Encoder Representations from Transformers), released in 2018, was not a separate system added alongside Google Search—it was created <em>by</em> the Search team and integrated <em>into</em> the core ranking algorithm. BERT's architecture—understanding context by looking at words bidirectionally—emerged directly from years of work on understanding search queries and document relevance. It formalized and enhanced capabilities the algorithm had been developing since its inception.</p>
+        
+        <p>The pre-BERT search algorithm already embodied many of the same principles:</p>
+        <ul>
+            <li><strong>Contextual understanding:</strong> Interpreting query intent, not just keyword matching</li>
+            <li><strong>Pattern recognition:</strong> Identifying topical clusters and semantic relationships</li>
+            <li><strong>Anomaly detection:</strong> Flagging spam, manipulation, and unnatural patterns</li>
+            <li><strong>Multi-signal fusion:</strong> Combining hundreds of ranking factors into coherent relevance scores</li>
+        </ul>
+        
+        <p>BERT formalized and made these capabilities transferable. When we use BERT-based models for security log analysis, we are applying the same pattern-recognition logic that Google developed for understanding human language and intent—logic that SEO practitioners learned to reverse-engineer through correlation analysis.</p>
+        
+        <div class="theorem">
+            <p class="theorem-title">💡 Key Insight: Algorithmic Lineage</p>
+            <p>The SEO correlation methodology worked because it approximated how Google's algorithm actually processed signals. BERT-based security analysis works for the same reason: the model's architecture inherently understands pattern correlation because it was <em>born from</em> the same algorithmic lineage. We are not forcing an unrelated tool onto a new problem—we are applying a tool to a simpler version of the problem it was designed to solve.</p>
+        </div>
+
+        <h3>1.6 Our Contribution: Ephemeral Recursive Learning</h3>
         <p>We propose a third approach: <strong>agents that learn and then die, leaving only their wisdom behind</strong>.</p>
         
         <p>The key insight is that <em>knowledge can be abstracted from data</em>. A security analyst who investigates a breach involving specific identifiers learns the abstract pattern—not the specific details.</p>
